@@ -13,6 +13,7 @@ import com.guardians.cmpe272.assignment.model.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Long>,InventoryRepositoryCustom{
 	
 	/*@Query(value = "SELECT * FROM INVENTORY WHERE BOOK_ID = ?1", nativeQuery = true)
-	public List<Inventory> findByBookId(Long bookId);*/
+	public List<Inventory> findByBookId(Long bookId);
+	*/
 	
 }
