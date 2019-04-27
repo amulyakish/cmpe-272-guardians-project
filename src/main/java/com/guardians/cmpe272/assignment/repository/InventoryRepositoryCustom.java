@@ -9,6 +9,5 @@ import com.guardians.cmpe272.assignment.model.Inventory;
 
 public interface InventoryRepositoryCustom {
 	
-	public List<Inventory> findByBookId(Long bookId);
-	
+	public List<Inventory> findByBookId(Long bookId);	
 }
