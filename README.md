@@ -4,5 +4,6 @@ Team WALK:
   Lucero Davalos,
   Kostiantyn Pavlenko.
 
-
-[CircleCI](https://circleci.com/gh/amulyakish/cmpe-272-guardians-assignment.svg?style=svg)](https://circleci.com/gh/amulyakish/cmpe-272-guardians-assignment)
+## Build Status
+[![Build Status]
+[![CircleCI](https://circleci.com/gh/amulyakish/cmpe-272-guardians-assignment.svg?style=svg)](https://circleci.com/gh/amulyakish/cmpe-272-guardians-assignment)]
