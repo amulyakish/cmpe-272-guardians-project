@@ -46,23 +46,27 @@ public class BookOrderRepositoryTest {
 		Book book2 = new Book("101-4567-890", "Test Book 8", Float.parseFloat("50"));
 		bookRepository.save(book2);
 		
+		book1 = bookRepository.findByTitle("Test Book 7");
+		Inventory inv1 = new Inventory(book1, 57);
+		inventoryRepository.save(inv1);
+		
+		book2 = bookRepository.findByTitle("Test Book 8");
+		Inventory inv2 = new Inventory(book2, 33);
+		inventoryRepository.save(inv2);
+		
 		createCustomer();
 		Customer customer = customerRepository.findAll().get(0);
 		
-		List<Book> books = bookRepository.findAll();
-		
 		BookOrder order = new BookOrder(customer, 0, new Date());
-		OrderLine line1 = new OrderLine(books.get(0), 2, books.get(0).getPrice()*2);
-		OrderLine line2 = new OrderLine(books.get(1), 1, books.get(1).getPrice()*1);
-		float orderTotal = (books.get(0).getPrice()*2) + (books.get(1).getPrice()*1);
+		OrderLine line1 = new OrderLine(book1, 2, book1.getPrice()*2);
+		OrderLine line2 = new OrderLine(book2, 1, book2.getPrice()*1);
+		float orderTotal = (book1.getPrice()*2) + (book2.getPrice()*1);
 		order.setOrderTotal(orderTotal);
 		line1.associateToOrder(order);
 		line2.associateToOrder(order);
 		
 		orderRepository.save(order);
-		
-		List<BookOrder> orders = orderRepository.findAll();
-		BookOrder bo = orders.get(0);
+
 		assertEquals(71, orderTotal, 0);		
 	}
 	
@@ -71,13 +75,14 @@ public class BookOrderRepositoryTest {
 		createBooks();
 		createCustomer();
 		Customer customer = customerRepository.findAll().get(0);
-		
-		List<Book> books = bookRepository.findAll();
+
+		Book book1  = bookRepository.findByTitle("Test Book 3");
+		Book book2  = bookRepository.findByTitle("Test Book 4");
 		
 		BookOrder order = new BookOrder(customer, 0, new Date());
-		OrderLine line1 = new OrderLine(books.get(0), 2, books.get(0).getPrice()*2);
-		OrderLine line2 = new OrderLine(books.get(1), 1, books.get(1).getPrice()*1);
-		float orderTotal = (books.get(0).getPrice()*2) + (books.get(1).getPrice()*1);
+		OrderLine line1 = new OrderLine(book1, 2, book1.getPrice()*2);
+		OrderLine line2 = new OrderLine(book2, 1, book2.getPrice()*1);
+		float orderTotal = (book1.getPrice()*2) + (book2.getPrice()*1);
 		order.setOrderTotal(orderTotal);
 		line1.associateToOrder(order);
 		line2.associateToOrder(order);
@@ -89,8 +94,8 @@ public class BookOrderRepositoryTest {
 		assertEquals(1, status.getOrderFulfillStatus());
 		assertEquals(Error.SUCCESS, status.getError());
 		
-		List<Inventory> inv1 = inventoryRepository.findByBookId(books.get(0).getBookId());
-		List<Inventory> inv2 = inventoryRepository.findByBookId(books.get(1).getBookId());
+		List<Inventory> inv1 = inventoryRepository.findByBookId(book1.getBookId());
+		List<Inventory> inv2 = inventoryRepository.findByBookId(book2.getBookId());
 		
 		assertEquals(55, inv1.get(0).getNoOfCopies());
 		assertEquals(32, inv2.get(0).getNoOfCopies());
@@ -108,9 +113,11 @@ public class BookOrderRepositoryTest {
 		Book book2 = new Book("101-4567-890", "Test Book 4", Float.parseFloat("50"));
 		bookRepository.save(book2);
 
+		book1 = bookRepository.findByTitle("Test Book 3");
 		Inventory inv1 = new Inventory(book1, 57);
 		inventoryRepository.save(inv1);
 		
+		book2 = bookRepository.findByTitle("Test Book 4");
 		Inventory inv2 = new Inventory(book2, 33);
 		inventoryRepository.save(inv2);
 		

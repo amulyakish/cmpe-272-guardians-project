@@ -6,5 +6,5 @@ import com.guardians.cmpe272.assignment.model.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>,  BookRepositoryCustom {
-
+	Book findByTitle(String title);
 }

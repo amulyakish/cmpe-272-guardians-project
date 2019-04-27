@@ -22,4 +22,14 @@ public class InventoryRepositoryImpl implements InventoryRepositoryCustom{
 				.getResultList();
 	}
 
+	@Override
+	public Inventory findByBookName(String bookName) {
+		final StringBuilder query = new StringBuilder("select inventory from Inventory inventory ")
+				.append(" join Book book on inventory.book.id = book.id where inventory.book.title = :bookName ");
+		
+		return (Inventory) em.createQuery(query.toString())
+				.setParameter("bookName", bookName)
+				.getSingleResult();
+	}
+
 }

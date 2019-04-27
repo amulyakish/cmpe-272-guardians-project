@@ -15,13 +15,7 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 
 	@Autowired
 	InventoryRepository inventoryRepository;
-	
-	/*@Override
-	public <S extends BookOrder> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
-	
+
 	@Override
 	public Status fulfillOrder(BookOrder order) {
 		Status status = new Status();

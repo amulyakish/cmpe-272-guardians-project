@@ -26,9 +26,8 @@ public class BookRepositoryImpl implements BookRepositoryCustom {
 		
 		List<Book> books = bookRepository.findAll();
 		for(Book book: books) {
-			//Optional<Inventory> inventory = inventoryRepository.findById(book.getBookId());
-			List<Inventory> inventory = inventoryRepository.findByBookId(book.getBookId());
-			bookMap.put(book, inventory.get(0).getNoOfCopies());
+			Inventory inventory = inventoryRepository.findByBookName(book.getTitle());
+			bookMap.put(book, inventory.getNoOfCopies());
 		}
 		
 		return bookMap;
