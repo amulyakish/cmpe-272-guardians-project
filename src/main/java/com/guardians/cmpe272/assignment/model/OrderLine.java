@@ -121,8 +121,8 @@ public class OrderLine implements Serializable {
 		this.itemTotal = itemTotal;
 	}
 	
-	public void setItemTotal(Book book, int quantity) {
+	/*public void setItemTotal(Book book, int quantity) {
 		this.itemTotal = book.getPrice() * quantity;
-	}
+	}*/
 
 }

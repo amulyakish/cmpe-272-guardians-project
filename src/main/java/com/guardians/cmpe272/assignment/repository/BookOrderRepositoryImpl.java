@@ -1,13 +1,18 @@
 package com.guardians.cmpe272.assignment.repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.guardians.cmpe272.assignment.model.Book;
 import com.guardians.cmpe272.assignment.model.BookOrder;
+import com.guardians.cmpe272.assignment.model.Customer;
 import com.guardians.cmpe272.assignment.model.Inventory;
 import com.guardians.cmpe272.assignment.model.OrderLine;
+import com.guardians.cmpe272.assignment.model.Pair;
 import com.guardians.cmpe272.assignment.model.Status;
 import com.guardians.cmpe272.assignment.model.Status.Error;
 
@@ -15,6 +20,29 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 
 	@Autowired
 	InventoryRepository inventoryRepository;
+	
+	@Autowired
+	BookOrderRepository orderRepository;
+	
+	@Override
+	public Long createOrder(Customer customer, List<Pair> orderDetails) {
+		float orderTotal = 0;
+		
+		BookOrder order = new BookOrder(customer, 0, new Date());
+		for(Pair pair: orderDetails) {
+	        Book book = pair.getBook();
+	        Integer copies = pair.getCopies();
+	        
+	        OrderLine orderLine = new OrderLine(book, copies, book.getPrice()*copies);
+	        orderTotal = orderTotal + (book.getPrice()*copies);
+	        orderLine.associateToOrder(order);
+		}
+		order.setOrderTotal(orderTotal);
+		
+		orderRepository.save(order);
+		
+		return order.getOrderId();
+	}
 
 	@Override
 	public Status fulfillOrder(BookOrder order) {
@@ -54,6 +82,5 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 			}
 		}		
 		return 1;*/
-	}
-
+	}	
 }
