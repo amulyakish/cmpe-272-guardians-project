@@ -14,6 +14,8 @@ public class Status {
 		SUCCESS,
 		
 		OUT_OF_STOCK,
+		
+		ORDER_ALREADY_FULFILLED,
 
 		UNKNOWN_ERROR;
 	}

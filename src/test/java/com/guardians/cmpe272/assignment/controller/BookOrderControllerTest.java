@@ -39,13 +39,13 @@ public class BookOrderControllerTest {
 	@MockBean
 	private BookOrderRepository orderRepository;
 	
-	String orderStr = "{\"bookOrder\" : {\"customer\" : "
+	String orderStr = "{\"customer\" : "
 			+ "{\"name\" : \"AK\",\"email\": \"ak@ak.com\","
 			+ "\"address\": \"185 Brooks Drive, Santa Monica 96785\"},"
 			+ "\"orderTotal\" : 0,\"orderLines\" : [{\"book\" : "
 			+ "{\"isbn\" : \"123-4567-890\",\"title\" : \"Test Book 12\","
 			+ "\"price\" : 50},\"quantity\" : 1,\"itemTotal\" : 0}],"
-			+ "\"createdAt\" : \"\",\"isFulfilled\" : \"\"}}";
+			+ "\"createdAt\" : \"\",\"isFulfilled\" : \"\"}";
 	
 	String status = "{\"success\":\"true\"}";
 	String outOfStock = "{\"success\":\"false\", \"error\":\"Out Of Stock\"}";

@@ -9,7 +9,9 @@ import java.io.Serializable;
 @Table(name = "book")
 public class Book implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+    @SequenceGenerator(name = "id_Sequence", sequenceName = "BOOK_ID_SEQ")
     private Long bookId;
 
     @Column(length = 255)

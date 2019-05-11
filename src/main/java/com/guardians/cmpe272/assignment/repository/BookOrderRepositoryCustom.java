@@ -15,5 +15,5 @@ public interface BookOrderRepositoryCustom {
 	
 	public Long createOrder(Customer customer, List<Pair> orderDetails);
 	
-	public Status fulfillOrder(BookOrder order);
+	public Status fulfillOrder(Long orderId);
 }

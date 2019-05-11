@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +26,9 @@ import org.hibernate.annotations.Type;
 @Table(name = "book_order")
 public class BookOrder implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+    @SequenceGenerator(name = "id_Sequence", sequenceName = "BOOKORDER_ID_SEQ")
     private Long orderId;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,7 +37,7 @@ public class BookOrder implements Serializable {
     
     private float orderTotal;
     
-    @OneToMany(mappedBy = "bookOrder")
+    @OneToMany(mappedBy = "bookOrder", cascade = CascadeType.ALL)
 	private final Set<OrderLine> orderLines = new HashSet<>();
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -121,6 +125,10 @@ public class BookOrder implements Serializable {
 	public void addOrderLine(OrderLine line) {
 		line.setBookOrder(this);
 		this.getOrderLines().add(line);
+	}
+	
+	public void setOrderLine(OrderLine line) {
+		this.addOrderLine(line);
 	}
 
 	/**

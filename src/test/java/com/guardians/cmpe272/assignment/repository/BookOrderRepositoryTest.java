@@ -89,7 +89,7 @@ public class BookOrderRepositoryTest {
 		
 		orderRepository.save(order);
 		
-		Status status = orderRepository.fulfillOrder(order);
+		Status status = orderRepository.fulfillOrder(order.getOrderId());
 		
 		assertEquals(1, status.getOrderFulfillStatus());
 		assertEquals(Error.SUCCESS, status.getError());

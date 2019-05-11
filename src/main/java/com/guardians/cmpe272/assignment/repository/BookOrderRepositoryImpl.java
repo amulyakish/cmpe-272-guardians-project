@@ -45,7 +45,8 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 	}
 
 	@Override
-	public Status fulfillOrder(BookOrder order) {
+	public Status fulfillOrder(Long orderId) {
+		BookOrder order = orderRepository.getOne(orderId);
 		Status status = new Status();
 		if(order.getIsFulfilled() == null && validateOrder(order) == 1) {
 			for (OrderLine line : order.getOrderLines()) {
@@ -54,8 +55,13 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 				inventoryRepository.save(inventory.get(0));
 			}				
 			order.setIsFulfilled(Boolean.TRUE);
+			orderRepository.save(order);
 			status.setOrderFulfillStatus(1);
 			status.setError(Error.SUCCESS);
+		}
+		else if(order.getIsFulfilled() != null && order.getIsFulfilled() == Boolean.TRUE) {
+			status.setOrderFulfillStatus(0);
+			status.setError(Error.ORDER_ALREADY_FULFILLED);
 		}
 		else if(validateOrder(order) == 0){
 			status.setOrderFulfillStatus(0);
@@ -70,10 +76,10 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 	}
 	
 	private int validateOrder(BookOrder order) {
-		return 1;
-		/*Set<OrderLine> orderLines = order.getOrderLines();
+		Set<OrderLine> orderLines = order.getOrderLines();
 		for (OrderLine line : orderLines) {
-			Inventory inventory = inventoryRepository.findByBook(line.getBook());
+			//Inventory inventory = inventoryRepository.findByBook(line.getBook());
+			Inventory inventory = inventoryRepository.findByBookId(line.getBook().getBookId()).get(0);
 			if(line.getQuantity() <= inventory.getNoOfCopies()) {
 				continue;
 			}
@@ -81,6 +87,6 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 				return 0;
 			}
 		}		
-		return 1;*/
+		return 1;
 	}	
 }
