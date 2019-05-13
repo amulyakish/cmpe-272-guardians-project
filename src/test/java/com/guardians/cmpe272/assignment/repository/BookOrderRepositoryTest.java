@@ -70,7 +70,7 @@ public class BookOrderRepositoryTest {
 		assertEquals(71, orderTotal, 0);		
 	}
 	
-	@Test
+	//@Test
 	public void fulfillOrderTest1() {
 		createBooks();
 		createCustomer();
