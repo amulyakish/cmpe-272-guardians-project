@@ -1,6 +1,7 @@
 package com.guardians.cmpe272.assignment.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.guardians.cmpe272.assignment.json.BookOrderJson;
 import com.guardians.cmpe272.assignment.model.BookOrder;
 import com.guardians.cmpe272.assignment.model.OrderLine;
 import com.guardians.cmpe272.assignment.model.Status;
@@ -40,6 +42,13 @@ public class BookOrderController {
 	@GetMapping("/allOrders")
 	public List<Long> getAllOrders() {
 		return orderRepository.getAllOrderIds();
+	}
+	
+	@GetMapping("/orders/{id}")
+	public BookOrderJson viewOrder(@PathVariable(value = "id") Long orderId) {
+		Optional<BookOrder> order = this.orderRepository.findById(orderId);
+		BookOrderJson json = new BookOrderJson(order.get());
+		return json;
 	}
 	
 	// Fulfill Order
