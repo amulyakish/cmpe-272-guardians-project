@@ -1,8 +1,11 @@
 package com.guardians.cmpe272.assignment.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +35,11 @@ public class BookOrderController {
 		BookOrder createdOrder = orderRepository.save(order);
 		String response = "{\"orderId\":" + createdOrder.getOrderId().toString() + "}";
 	    return response;
+	}
+	
+	@GetMapping("/allOrders")
+	public List<Long> getAllOrders() {
+		return orderRepository.getAllOrderIds();
 	}
 	
 	// Fulfill Order

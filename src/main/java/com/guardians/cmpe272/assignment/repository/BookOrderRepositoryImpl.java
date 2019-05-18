@@ -1,5 +1,6 @@
 package com.guardians.cmpe272.assignment.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -88,5 +89,15 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 			}
 		}		
 		return 1;
+	}
+
+	@Override
+	public List<Long> getAllOrderIds() {
+		List<Long> orderIdList = new ArrayList<>();
+		List<BookOrder> orders = orderRepository.findAll();
+		for(BookOrder order: orders) {
+			orderIdList.add(order.getOrderId());
+		}
+		return orderIdList;
 	}	
 }

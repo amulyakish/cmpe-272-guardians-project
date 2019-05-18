@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "book_order")
 public class BookOrder implements Serializable {
@@ -31,7 +33,7 @@ public class BookOrder implements Serializable {
     @SequenceGenerator(name = "id_Sequence", sequenceName = "BOOKORDER_ID_SEQ")
     private Long orderId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
     
