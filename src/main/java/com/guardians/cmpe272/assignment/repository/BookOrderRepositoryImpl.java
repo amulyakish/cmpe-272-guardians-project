@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +30,7 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 	BookOrderRepository orderRepository;
 	
 	@Override
+	@Transactional
 	public Long createOrder(Customer customer, List<Pair> orderDetails) {
 		float orderTotal = 0;
 		
@@ -47,25 +51,27 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 	}
 
 	@Override
+	@Transactional
 	public Status fulfillOrder(Long orderId) {
-		BookOrder order = orderRepository.getOne(orderId);
+		Optional<BookOrder> order = orderRepository.findById(orderId);
+		//orderRepository.findById(orderId);
 		Status status = new Status();
-		if(order.getIsFulfilled() == null && validateOrder(order) == 1) {
-			for (OrderLine line : order.getOrderLines()) {
+		if((order.get().getIsFulfilled() == null || order.get().getIsFulfilled() == Boolean.FALSE) && validateOrder(order.get()) == 1) {
+			for (OrderLine line : order.get().getOrderLines()) {
 				List<Inventory> inventory = inventoryRepository.findByBookId(line.getBook().getBookId());
 				inventory.get(0).setNoOfCopies(inventory.get(0).getNoOfCopies() - line.getQuantity());
 				inventoryRepository.save(inventory.get(0));
 			}				
-			order.setIsFulfilled(Boolean.TRUE);
-			orderRepository.save(order);
+			order.get().setIsFulfilled(Boolean.TRUE);
+			orderRepository.save(order.get());
 			status.setOrderFulfillStatus(1);
 			status.setError(Error.SUCCESS);
 		}
-		else if(order.getIsFulfilled() != null && order.getIsFulfilled() == Boolean.TRUE) {
+		else if(order.get().getIsFulfilled() != null && order.get().getIsFulfilled() == Boolean.TRUE) {
 			status.setOrderFulfillStatus(0);
 			status.setError(Error.ORDER_ALREADY_FULFILLED);
 		}
-		else if(validateOrder(order) == 0){
+		else if(validateOrder(order.get()) == 0){
 			status.setOrderFulfillStatus(0);
 			status.setError(Error.OUT_OF_STOCK);
 		}
