@@ -23,11 +23,11 @@ public class OrderLine implements Serializable {
     @SequenceGenerator(name = "id_Sequence", sequenceName = "ORDERLINE_ID_SEQ")
     private Long orderLineId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
 	private BookOrder bookOrder;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
     
