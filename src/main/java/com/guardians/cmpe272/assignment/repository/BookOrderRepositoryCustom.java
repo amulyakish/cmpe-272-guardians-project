@@ -7,6 +7,7 @@ import com.guardians.cmpe272.assignment.model.BookOrder;
 import com.guardians.cmpe272.assignment.model.Status;
 import com.guardians.cmpe272.assignment.model.Customer;
 import com.guardians.cmpe272.assignment.model.Pair;
+import com.guardians.cmpe272.assignment.json.BookOrderJson;
 import com.guardians.cmpe272.assignment.model.Book;
 
 public interface BookOrderRepositoryCustom {
@@ -17,5 +18,5 @@ public interface BookOrderRepositoryCustom {
 	
 	public Status fulfillOrder(Long orderId);
 	
-	public List<Long> getAllOrderIds();
+	public List<BookOrderJson> getAllOrderIds();
 }

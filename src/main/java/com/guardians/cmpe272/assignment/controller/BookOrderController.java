@@ -40,7 +40,7 @@ public class BookOrderController {
 	}
 	
 	@GetMapping("/allOrders")
-	public List<Long> getAllOrders() {
+	public List<BookOrderJson> getAllOrders() {
 		return orderRepository.getAllOrderIds();
 	}
 	

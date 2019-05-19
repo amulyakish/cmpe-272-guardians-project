@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.guardians.cmpe272.assignment.json.BookOrderJson;
 import com.guardians.cmpe272.assignment.model.Book;
 import com.guardians.cmpe272.assignment.model.BookOrder;
 import com.guardians.cmpe272.assignment.model.Customer;
@@ -92,11 +93,12 @@ public class BookOrderRepositoryImpl implements BookOrderRepositoryCustom{
 	}
 
 	@Override
-	public List<Long> getAllOrderIds() {
-		List<Long> orderIdList = new ArrayList<>();
+	public List<BookOrderJson> getAllOrderIds() {
+		List<BookOrderJson> orderIdList = new ArrayList<>();
 		List<BookOrder> orders = orderRepository.findAll();
 		for(BookOrder order: orders) {
-			orderIdList.add(order.getOrderId());
+			BookOrderJson json = new BookOrderJson(order);
+			orderIdList.add(json);
 		}
 		return orderIdList;
 	}	
