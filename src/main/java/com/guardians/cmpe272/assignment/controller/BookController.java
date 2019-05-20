@@ -9,11 +9,13 @@ import com.guardians.cmpe272.assignment.model.Inventory;
 import com.guardians.cmpe272.assignment.repository.BookRepository;
 import com.guardians.cmpe272.assignment.repository.InventoryRepository;
 import com.guardians.cmpe272.assignment.exception.ResourceNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 public class BookController {
 
