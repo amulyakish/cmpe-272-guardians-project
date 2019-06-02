@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.guardians.cmpe272</groupId>
-	<artifactId>assignment</artifactId>
+	<artifactId>project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>assignment</name>
-	<description>Bookstore for Assignment</description>
+	<name>project</name>
+	<description>AirBnB for Project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
